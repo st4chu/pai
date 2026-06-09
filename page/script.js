@@ -26,9 +26,9 @@ async function read(){
     try{
         const response = await fetch(API);
         console.log('Status: ', response.status);
-        console.log('Typ: ', response.headers.get('content-type'));
+        console.log('Typ: ', response.headers.get('Content-Type'));
 
-        const contentType = response.headers.get('content-type');
+        const contentType = response.headers.get('Content-Type');
         if(!contentType || !contentType.includes('application/json')){
             console.error('Plik nie jest typu JSON');
             throw new Error('Api nie zwraca JSON');
