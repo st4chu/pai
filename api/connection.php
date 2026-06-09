@@ -13,9 +13,9 @@ class DB{
 
     try {
         $conn = sqlsrv_connect($serverName, $connectionOptions);
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        #$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
-    catch (PDOException $e) {
+    catch (exception $e) {
         print("Error connecting to SQL Server.");
         die(print_r($e));
     }
