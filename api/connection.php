@@ -3,8 +3,8 @@
 class DB{
     public $host = "tc-ms-db.database.windows.net";
     public $database = "azure-db";
-    public $username = "";
-    public $password = "";
+    public $username = "CloudSA349e26e7";
+    public $password = "Chmurowa123!";
     public $conn;
 
     public function getConn(){
