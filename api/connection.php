@@ -1,7 +1,7 @@
 <?php
 
 class DB{
-    public $host = "tc-ms-db";
+    public $host = "tc-ms-db.database.windows.net";
     public $database = "azure-db";
     public $username = "";
     public $password = "";
