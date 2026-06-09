@@ -11,14 +11,15 @@ class DB{
     public function getConn(){
         $this->conn = null;
 
-    try {
-        $conn = sqlsrv_connect($serverName, $connectionOptions);
-        #$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+   try {
+    $conn = new PDO("sqlsrv:server = tcp:tc-ms-us.database.windows.net,1433; Database = kalendarz", "kalendarz", "QWEasd123");
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
-    catch (exception $e) {
+    catch (PDOException $e) {
         print("Error connecting to SQL Server.");
         die(print_r($e));
     }
+
         return $this->conn;
     }
 }
