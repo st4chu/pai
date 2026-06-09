@@ -16,7 +16,7 @@ const alarm = document.getElementById("alert");
 
 //przyciski w tabeli
 const delete_btns = document.getElementsByClassName("delete");
-const API = 'http://localhost:8080/rest2/api/index.php';
+const API = '../api/index.php';
 
 // zczytywanie z tabeli
 // wywolywane po zaladowaniu strony
