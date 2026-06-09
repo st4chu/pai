@@ -12,7 +12,7 @@ class DB{
         $this->conn = null;
 
     try {
-        $conn = new PDO("sqlsrv:server = tcp:ms-sql-tc.postgres.database.azure.com; Database = events", "kalendarz", "QWEasd123");
+        $conn = new PDO("sqlsrv:server = ms-sql-tc.postgres.database.azure.com; Database = events", "kalendarz", "QWEasd123");
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
     catch (PDOException $e) {
