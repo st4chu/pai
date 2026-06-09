@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="secondary.css">
+    <title>E-Kalenarz</title>
+</head>
+<body>
+    <header id="header">
+            <h1>E-Kalendarz</h1>
+    </header>
+    <nav id="nav">
+        <ul class="links">
+            <li>
+                <a>Logowanie</a>
+            </li>
+            <li>
+                <a>Rejestracja</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="main">
+        <div id="post">
+            <h2>Dodaj nowe wydarzenie</h2>
+            <form id="form">
+                <div class="row">
+                    <input type="text" id="event_header" placeholder="Tytuł" class="col-6">
+                    <div class="col-6"></div>
+                    <input type="text" id="event_note" placeholder="Opis" class="col-6">
+                    <div class="col-6"></div>
+                    <input type="date" id="event_date" class="col-3">
+                    <input type="time" id="event_time" class="col-3">
+                    <div class="col-12"></div>      
+                    <button id="send" class="primary col-2">Dodaj</button>
+                    <div class="col-12"></div>    
+                    <button id="reset" class="col-2">Wczyść</button>
+                </div>
+            </form>
+            <div>
+                <span id="message">PLACE</span>  
+                <span id="alert">HOLDER</span>
+                <hr>
+            </div>
+            <div id="events">
+                
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+

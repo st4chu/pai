@@ -1,0 +1,47 @@
+#message {
+    color: red;
+}
+
+.passed {
+    color: #404040;
+    background: #40404010;
+}
+.nextweek {
+    color: #00ff7f;
+    background-color: #00ff7f10;
+}
+.nextday {
+    color: #ffaf00;
+    background-color: #ffaf0010;
+}
+.today {
+    color: #af0000;
+    background-color: #af000010;
+}
+
+.event_header{
+    font-size: 32px;
+    text-align: center;
+    font-weight: bold;
+}
+.event_date{
+    font-size: 20px;
+    text-align: center;
+    padding: 0px;
+    margin: 0px;
+}
+.event_note{
+    text-align: center;
+    width: 100%;
+}
+
+.actions{
+    display: inline-block;
+    width: 100%;
+}
+.edit{
+    float: left;
+}
+.delete{
+    float: right;
+}
