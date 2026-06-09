@@ -1,10 +1,10 @@
 <?php
 
 class DB{
-    public $host = "tc-ms-db.database.windows.net";
+    public $host = "ms-tc-sql.postgres.database.azure.com";
     public $database = "azure-db";
-    public $username = "CloudSA349e26e7";
-    public $password = "Chmurowa123!";
+    public $username = "kalendarz";
+    public $password = "QWEasd123";
     public $conn;
     
 
@@ -12,7 +12,7 @@ class DB{
         $this->conn = null;
 
     try {
-        $conn = new PDO("sqlsrv:server = tcp:tc-ms-db.database.windows.net,1433; Database = azure-db", "CloudSA349e26e7", "Chmurowa123!");
+        $conn = new PDO("sqlsrv:server = tcp:ms-sql-tc.postgres.database.azure.com; Database = events", "kalendarz", "QWEasd123");
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
     catch (PDOException $e) {
