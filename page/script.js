@@ -17,8 +17,6 @@ const alarm = document.getElementById("alert");
 //przyciski w tabeli
 const delete_btns = document.getElementsByClassName("delete");
 const API = '../api/index.php';
-console.log(document.location);
-console.lof(document.location.origin);
 
 // zczytywanie z tabeli
 // wywolywane po zaladowaniu strony
@@ -211,6 +209,8 @@ async function editEvent(id){
 // po zaladowaniu strony
 // READ // GET
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOC: ",document.location);
+    console.log("ORIGIN: ",document.location.origin);
     console.log('URL REST API: ',API)
     read();
 })
