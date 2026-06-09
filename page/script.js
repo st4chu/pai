@@ -45,7 +45,7 @@ async function read(){
         }
     }
     catch(error){
-        console.log("No to mamy kurcze error: ",error);
+        console.log("No to mamy kurcze error: ",string(error));
     }
 }
 

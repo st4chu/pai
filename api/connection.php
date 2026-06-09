@@ -11,15 +11,19 @@ class DB{
     public function getConn(){
         $this->conn = null;
 
-       try{
-			#$this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->database, $this->username, $this->password);
-            #$this->conn = sqlsrv_connect($host, $database, $username, $password);
-			$this->conn = new PDO("sqlsrv:server = ".$host.
-            "; Database = ".$database, $username, $password);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		}catch(PDOException $e){
-			echo "connection error: " . $e->getMessage();
-		}
+    try {
+        $conn = new PDO("sqlsrv:server = tcp:tc-ms-db.database.windows.net,1433; Database = azure-db", "CloudSA349e26e7", "Chmurowa123!");
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }
+    catch (PDOException $e) {
+        print("Error connecting to SQL Server.");
+        die(print_r($e));
+    }
+
+    $connectionInfo = array("UID" => "CloudSA349e26e7", "pwd" => "{your_password_here}", "Database" => "azure-db", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
+    $serverName = "tcp:tc-ms-db.database.windows.net,1433";
+    $conn = sqlsrv_connect($serverName, $connectionInfo);
+
         return $this->conn;
     }
 }
