@@ -1,9 +1,9 @@
 <?php
 
 class DB{
-    public $host = "localhost";
-    public $database = "rest";
-    public $username = "root";
+    public $host = "tc-ms-db";
+    public $database = "azure-db";
+    public $username = "";
     public $password = "";
     public $conn;
 
