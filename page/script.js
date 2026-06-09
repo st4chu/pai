@@ -17,6 +17,8 @@ const alarm = document.getElementById("alert");
 //przyciski w tabeli
 const delete_btns = document.getElementsByClassName("delete");
 const API = '../api/index.php';
+console.log(document.location);
+console.lof(document.location.origin);
 
 // zczytywanie z tabeli
 // wywolywane po zaladowaniu strony
