@@ -13,8 +13,10 @@ class DB{
 
        try{
 			#$this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->database, $this->username, $this->password);
-            $this->conn = sqlsrv_connect($host, $database, $username, $password);
-			$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            #$this->conn = sqlsrv_connect($host, $database, $username, $password);
+			$this->conn = new PDO("sqlsrv:server = ".$host.
+            "; Database = ".$database, $username, $password);
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		}catch(PDOException $e){
 			echo "connection error: " . $e->getMessage();
 		}
