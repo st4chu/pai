@@ -28,17 +28,11 @@ class Item{
 
 
     public function create() {
-        $query = 'INSERT INTO events (date,header,note) VALUES (:date, :header, :note)';
-        $stmt = $this->conn->prepare($query);
-
         $this->event_date = htmlspecialchars(strip_tags($this->event_date));
         $this->event_header = htmlspecialchars(strip_tags($this->event_header));
         $this->event_note = htmlspecialchars(strip_tags($this->event_note));
-        
-        $stmt->bindParam(':date', $this->event_date);
-        $stmt->bindParam(':header', $this->event_header);
-        $stmt->bindParam(':note', $this->event_note);
-        
+        $query = 'INSERT INTO events (date,header,note) VALUES ($this->event_date, $this->event_header, $this->event_note)';
+
         if($stmt = sqlsrv_query($this->conn,$query)){
             return true;
         } 
@@ -49,20 +43,16 @@ class Item{
     }
 
     public function update(){
-        $query = 'UPDATE events
-        SET date = :date, header = :header, note = :note
-        WHERE id = :id';
-        $stmt = $this->conn->prepare($query);
+
 
         $this->event_date = htmlspecialchars(strip_tags($this->event_date));
         $this->event_header = htmlspecialchars(strip_tags($this->event_header));
         $this->event_note = htmlspecialchars(strip_tags($this->event_note));
         $this->id = htmlspecialchars(strip_tags($this->id));
 
-        $stmt ->bindParam(':id', $this->id);
-        $stmt->bindParam(':date', $this->event_date);
-        $stmt->bindParam(':header', $this->event_header);
-        $stmt->bindParam(':note', $this->event_note);
+        $query = 'UPDATE events
+        SET date = $this->event_date, header = $this->event_header, note = $this->event_note
+        WHERE id = $this->id';
         
         if($stmt = sqlsrv_query($this->conn,$query)){
             return true;
@@ -75,7 +65,7 @@ class Item{
 
     public function delete(){
          $query = 'DELETE FROM events
-            WHERE id = :id';
+            WHERE id = $this->id';
 
         $this->id = htmlspecialchars(strip_tags($this->id));
 
