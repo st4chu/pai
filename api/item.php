@@ -22,8 +22,7 @@ class Item{
             FROM events
             ORDER BY date ASC';
     
-        $stmt = $this->conn->prepare($query); 
-        $stmt->execute();
+        $stmt = sqlsrv_query($conn, ,$query);
         return $stmt;
     }
 
@@ -40,7 +39,7 @@ class Item{
         $stmt->bindParam(':header', $this->event_header);
         $stmt->bindParam(':note', $this->event_note);
         
-        if($stmt->execute()){
+        if($stmt = sqlsrv_query($conn, ,$query)){
             return true;
         } 
         else{
@@ -65,7 +64,7 @@ class Item{
         $stmt->bindParam(':header', $this->event_header);
         $stmt->bindParam(':note', $this->event_note);
         
-        if($stmt->execute()){
+        if($stmt = sqlsrv_query($conn, ,$query)){
             return true;
         } 
         else{
@@ -77,13 +76,12 @@ class Item{
     public function delete(){
          $query = 'DELETE FROM events
             WHERE id = :id';
-        $stmt = $this->conn->prepare($query);
 
         $this->id = htmlspecialchars(strip_tags($this->id));
 
         $stmt ->bindParam(':id', $this->id);
         
-        if($stmt->execute()){
+        if($stmt = sqlsrv_query($conn, ,$query);){
             return true;
         } 
         else{
