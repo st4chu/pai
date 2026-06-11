@@ -22,7 +22,7 @@ class Item{
             FROM events
             ORDER BY date ASC';
     
-        $stmt = sqlsrv_query($conn,$query);
+        $stmt = sqlsrv_query($this->conn,$query);
         return $stmt;
     }
 
@@ -39,7 +39,7 @@ class Item{
         $stmt->bindParam(':header', $this->event_header);
         $stmt->bindParam(':note', $this->event_note);
         
-        if($stmt = sqlsrv_query($conn,$query)){
+        if($stmt = sqlsrv_query($this->conn,$query)){
             return true;
         } 
         else{
@@ -64,7 +64,7 @@ class Item{
         $stmt->bindParam(':header', $this->event_header);
         $stmt->bindParam(':note', $this->event_note);
         
-        if($stmt = sqlsrv_query($conn,$query)){
+        if($stmt = sqlsrv_query($this->conn,$query)){
             return true;
         } 
         else{
@@ -81,7 +81,7 @@ class Item{
 
         $stmt ->bindParam(':id', $this->id);
         
-        if($stmt = sqlsrv_query($conn,$query)){
+        if($stmt = sqlsrv_query($this->conn,$query)){
             return true;
         } 
         else{
