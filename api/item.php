@@ -22,7 +22,7 @@ class Item{
             FROM events
             ORDER BY date ASC';
     
-        $stmt = sqlsrv_query($conn, ,$query);
+        $stmt = sqlsrv_query($conn,$query);
         return $stmt;
     }
 
