@@ -1,8 +1,8 @@
 <?php
 
 class DB{
-    public $conn;
-    public $login =file_get_contents("../keys/login.txt");
+    public $conn = false;
+    public $login = file_get_contents("../keys/login.txt");
     public $pass = file_get_contents("../keys/pass.txt");
 
     public function __construct(){
