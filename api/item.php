@@ -15,12 +15,12 @@ class Item{
 
     public function read(){
         $query = 'SELECT 
-            id as id,
-            date as event_date,
-            header as event_header,
-            note as event_note
-            FROM events
-            ORDER BY date ASC';
+        id as id,
+        date as event_date,
+        header as event_header,
+        note as event_note
+        FROM events
+        ORDER BY date ASC';
     
         $stmt = sqlsrv_query($this->conn,$query);
         return $stmt;
@@ -31,7 +31,8 @@ class Item{
         $this->event_date = htmlspecialchars(strip_tags($this->event_date));
         $this->event_header = htmlspecialchars(strip_tags($this->event_header));
         $this->event_note = htmlspecialchars(strip_tags($this->event_note));
-        $query = 'INSERT INTO events (date,header,note) VALUES ($this->event_date, $this->event_header, $this->event_note)';
+        $query = 'INSERT INTO events (date,header,note) 
+        VALUES ($this->event_date, $this->event_header, $this->event_note)';
 
         if($stmt = sqlsrv_query($this->conn,$query)){
             return true;
@@ -64,13 +65,10 @@ class Item{
     }
 
     public function delete(){
-         $query = 'DELETE FROM events
-            WHERE id = $this->id';
-
         $this->id = htmlspecialchars(strip_tags($this->id));
+        $query = 'DELETE FROM events
+        WHERE id = $this->id';
 
-        $stmt ->bindParam(':id', $this->id);
-        
         if($stmt = sqlsrv_query($this->conn,$query)){
             return true;
         } 
