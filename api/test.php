@@ -9,7 +9,7 @@ include_once 'controller.php';
 $db = new DB();
 $conn = $db->getConn();
 $controller = new Controller($conn);
-
+echo "Połączenie: $conn";
 echo "\n\t TEST CREATE \n";
 
 $dummy = [
