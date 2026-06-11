@@ -1,7 +1,7 @@
 <?php
 
 class DB{
-    $private conn;
+    private $conn;
     public function __construct(){
     try {
         $login = file_get_contents("../keys/login.txt");
