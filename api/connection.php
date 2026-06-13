@@ -1,24 +1,21 @@
 <?php
 
 class DB{
-    public $conn = false;
+    public $host = "localhost";
+    public $database = "rest";
+    public $username = "root";
+    public $password = "";
+    public $conn;
 
-    public function __construct(){
-        try {
-            $login = file_get_contents("../keys/login.txt");
-            $pass = file_get_contents("../keys/pass.txt");
-            $connectionInfo = array("UID" => $this->login, "pwd" => $this->pass, "Database" => "kalendarz", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
-            $serverName = "tcp:kalendarz-sqldb.database.windows.net,1433";
-            $this->conn = sqlsrv_connect($serverName, $connectionInfo);
-            echo "\n $connectionInfo \n $servername \n";
-        }
-        catch (PDOException $e) {
-            print("Error connecting to SQL Server.");
-            die(print_r($e));
-        }
-    }
     public function getConn(){
+        $this->conn = null;
+
+       try{
+			$this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->database, $this->username, $this->password);
+			$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		}catch(PDOException $e){
+			echo "connection error: " . $e->getMessage();
+		}
         return $this->conn;
     }
 }
-?>

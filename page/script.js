@@ -8,7 +8,7 @@ const timeInput = document.getElementById("event_time");
 
 const sendButton = document.getElementById("send");
 const form = document.getElementById("form");
-
+const loginbox = document.getElementById("username");
 //elementy pomocnicze
 const display = document.getElementById("events");
 const message = document.getElementById("message");
@@ -16,23 +16,20 @@ const alarm = document.getElementById("alert");
 
 //przyciski w tabeli
 const delete_btns = document.getElementsByClassName("delete");
-const API = document.location.origin+'/api/index.php';
+const API_EV = document.location.origin+"/rest2zip/api/events/index.php";
+const API_USR = document.location.origin+"/rest2zip/api/users/index.php";
 
+let user;
+let logged;
 // zczytywanie z tabeli
 // wywolywane po zaladowaniu strony
 // READ // GET
-async function read(){
-    console.log("Pobieram API");
+async function read(id){
+    console.log("Pobieram API dla "+id);
     try{
-        const response = await fetch(API);
-        console.log('Status: ', response.status);
-        console.log('Typ: ', response.headers.get('Content-Type'));
-
-        const contentType = response.headers.get('Content-Type');
-        if(!contentType || !contentType.includes('application/json')){
-            console.error('Plik nie jest typu JSON');
-            throw new Error('Api nie zwraca JSON');
-        }
+        const response = await fetch(`${API_EV}?owner=${id}`,{
+            method: 'GET'
+        });
         const events = await response.json();
         console.log('Otrzymano: ', events);
 
@@ -45,7 +42,7 @@ async function read(){
         }
     }
     catch(error){
-        console.log("No to mamy kurcze error: ",string(error));
+        console.log("No to mamy kurcze error: ",error);
     }
 }
 
@@ -98,7 +95,7 @@ function displayAraray(array){
 async function addEvent(data){
     console.log("FUNC Dodawanie: ",JSON.stringify(data));
     try{
-        const response = await fetch(API, {
+        const response = await fetch(API_EV, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -106,13 +103,9 @@ async function addEvent(data){
         body: JSON.stringify(data)
         });
         const result = await response.json();
-        if(result.message){
-            alert(result.message); 
-        }
-        else throw "Błąd w json"
     }
     catch(error){
-        console.log("Błąd: ",error);
+        console.log("Blad: ",error);
     }
     finally{
         location.reload();
@@ -125,7 +118,7 @@ async function addEvent(data){
 async function deleteItem(id){
     console.log("Usuwanie rekordu o id: ",id);
     try{
-        const response = await fetch(`${API}?id=${id}`,
+        const response = await fetch(`${API_EV}?id=${id}`,
         {
             method: 'DELETE'
         });
@@ -135,7 +128,7 @@ async function deleteItem(id){
     }
     catch(error){
         console.log("Błąd przy uwsuwaniu rekordu o id: ",id);
-        alert(result.message);
+
     }
     finally{
         location.reload();
@@ -183,7 +176,7 @@ async function editEvent(id){
             date: String(date),
             note : document.getElementById("edit_note").value
         };
-        const response = await fetch(API, {
+        const response = await fetch(API_EV, {
             method: 'PUT',
             headers: {
                 'Content-Type' : 'application/json'
@@ -193,7 +186,7 @@ async function editEvent(id){
 
         const result = await response.json();
         if(result.message){
-            alert(result.message); 
+            
         }
         else throw "Błąd w json"
     }
@@ -209,10 +202,38 @@ async function editEvent(id){
 // po zaladowaniu strony
 // READ // GET
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("ORIGIN: ",document.location.origin);
-    console.log('URL REST API: ',API)
-    read();
+    console.log('URL REST API: ',API_EV)
+    console.log('URL REST API: ',API_USR)
+    logged = getCookie("logged");
+    user = getCookie("login");
+    if(logged == "true"){
+        loginbox.innerHTML = "Witamy, "+user;
+        let logout = "<li><button onClick='logout()' id='logout'>Wyloguj się</button></li>";
+        let linkbar = document.getElementById("links");
+        linkbar.innerHTML += logout;
+    }
+    else{
+        loginbox.innerHTML = "Nie zalogowano";
+        sendButton.setAttribute("disabled", "disabled");
+        headerInput.setAttribute("disabled", "disabled");
+        noteInput.setAttribute("disabled", "disabled");
+        dateInput.setAttribute("disabled", "disabled");
+        timeInput.setAttribute("disabled", "disabled");
+    }
+    asyncRead(user);
 })
+
+async function asyncRead(user){
+    const userid = await findUser(user);
+    console.log("USER: "+userid);
+    read(userid);
+}
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
 
 // wysylanie formularza
 // CREATE // POST
@@ -230,16 +251,52 @@ sendButton.addEventListener('click', (e) =>{
 
     // wypelniono niezbedne
     else{
+        message.innerHTML = "Pomyślnie dodano";
+        alarm.innerHTML = "";
+        asyncAdd(user, date);
+    }
+})
+
+async function asyncAdd(user,date){
+    let owner = await findUser(user);
+
         const data = {
+            owner : owner,
             date : date,
             header : headerInput.value,
             note : noteInput.value
         };
+        console.log(data);
         addEvent(data);
+}
 
-        message.innerHTML = "Pomyślnie dodano";
-        alarm.innerHTML = "";
-    }
-})
+async function findUser(login){
+            console.log("IN findUser()");
+            console.log(login);
+            let found = false;
+            try{
+                const response = await fetch(`${API_USR}?login=${login}`,{
+                    method : 'GET'
+                });
+                const result = await response.json();
+                if(await result.length > 0){
+                    found = await result[0].id;
+                }
+                else{
+                    found = false;
+                }
+                console.log("ODP: ",found);
+                return found;
+            }
+            catch(e){
+                console.log("błąd przy sprawdzaniu bd", e);
+            }
+        }
 // czyszczacy przycisk sam czysci 
 
+
+function logout(){
+    document.cookie = "logged=false";
+    document.cookie = "login=";
+    location.reload();
+}
