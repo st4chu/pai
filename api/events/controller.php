@@ -11,7 +11,7 @@ class Controller{
         $this->event->owner = $data;
         $return = $this->event->read($data);
         $result = [];
-        while($row = $return->sqlsrv_fetch($return)){
+        while($row = sqlsrv_fetch_array($return)){
             array_push($result, $row);
         }
         echo json_encode($result);

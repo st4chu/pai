@@ -51,7 +51,7 @@
             </div>
             <script type="text/javascript" src="sha256.js"></script>
             <script type="text/javascript">
-                const root = document.location.origin+"/rest2zip";
+                const root = document.location.origin;
                 const API_USR = root+"/api/users/index.php";
 
                 const sender = document.getElementById("send");

@@ -46,8 +46,9 @@
         </div>
     </div>
     <script>
-        const API_USR = document.location.origin+"/rest2zip/api/users/index.php";
-        const aalert = document.getElementById("alert");
+        const root = document.location.origin;
+        const API_USR = root+"/api/users/index.php";
+        const alarm = document.getElementById("alert");
         const message = document.getElementById("message");
         const sender = document.getElementById("send");
         sender.addEventListener('click', (e) =>{
@@ -58,14 +59,14 @@
             let pass2 = document.getElementById("pass2").value;
             // niekompletne dane
             if(!login || !pass1 || !pass2){
-                aalert.innerHTML = "Niekompletne dane";
+                alarm.innerHTML = "Niekompletne dane";
                 message.innerHTML = "";
             }
             // ok
             else{
                 if(pass1 === pass2){
                     message.innerHTML = "OK";
-                    aalert.innerHTML = "";
+                    alarm.innerHTML = "";
                     const data = {
                         login : login,
                         password : pass1
@@ -74,7 +75,7 @@
                 }
                 else{
                     message.innerHTML = "";
-                    aalert.innerHTML = "Hasła nie są takie same";
+                    alarm.innerHTML = "Hasła nie są takie same";
                 }
                 
             }
@@ -104,7 +105,7 @@
                 }
             }
             else{
-                aalert.innerHTML = "Użytkownik już istnieje";
+                alarm.innerHTML = "Użytkownik już istnieje";
                 message.innerHTML = "";
             }
 

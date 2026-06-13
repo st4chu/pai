@@ -16,8 +16,9 @@ const alarm = document.getElementById("alert");
 
 //przyciski w tabeli
 const delete_btns = document.getElementsByClassName("delete");
-const API_EV = document.location.origin+"/rest2zip/api/events/index.php";
-const API_USR = document.location.origin+"/rest2zip/api/users/index.php";
+const root = document.location.origin;
+const API_USR = root+"/api/users/index.php";
+const API_EV = root+"/api/events/index.php";
 
 let user;
 let logged;
