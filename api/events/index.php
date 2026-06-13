@@ -12,18 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 include_once '../connection.php';
 include_once 'item.php';
-//include_once 'controller.php';
+include_once 'controller.php';
 
-try{
-    $login = file_get_contents('../keys/login.txt');
-    $pass = file_get_contents('../keys/pass.txt')
-    $conn = new PDO("sqlsrv:server = tcp:kalendarz-sqldb.database.windows.net,1433; Database = kalendarz", $login, $pass);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-}catch(PDOException $e){
-	echo "connection error: " . $e->getMessage();
-}
-
+$db = new DB();
+$conn = $db->getConn();
 $controller = new Controller($conn);
 
 $method = $_SERVER['REQUEST_METHOD'];
