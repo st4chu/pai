@@ -28,9 +28,6 @@ class Item{
         $this->owner = htmlspecialchars(strip_tags($this->owner));
         $params = array($this->owner);
         $stmt = sqlsrv_query($this->conn, $query, $params); 
-        
-
-        $stmt->execute();
         return $stmt;
     }
 
