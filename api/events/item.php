@@ -5,9 +5,9 @@ class Item{
 
     public $id;
     public $owner;
-    public $event_date;
-    public $event_header;
-    public $event_note;
+    public $date;
+    public $header;
+    public $note;
 
 
     public function __construct($db){
@@ -18,15 +18,18 @@ class Item{
         $query = 'SELECT 
             id,
             owner,
-            date as event_date,
-            header as event_header,
-            note as event_note
+            date,
+            header,
+            note
             FROM events
-            WHERE owner LIKE :owner
+            WHERE owner LIKE ?
             ORDER BY date ASC';
-    
-        $stmt = $this->conn->prepare($query); 
-        $stmt->bindParam(':owner', $this->owner);
+
+        $this->owner = htmlspecialchars(strip_tags($this->owner));
+        $params = array($this->owner);
+        $stmt = sqlsrv_query($this->conn, $query, $params); 
+        
+
         $stmt->execute();
         return $stmt;
     }
@@ -34,20 +37,17 @@ class Item{
 
     public function create() {
         $query = 'INSERT INTO events (owner,date,header,note) 
-        VALUES (:owner, :date, :header, :note)';
-        $stmt = $this->conn->prepare($query);
+        VALUES (?, ?, ?, ?)';
 
-        $this->event_date = htmlspecialchars(strip_tags($this->event_date));
-        $this->event_header = htmlspecialchars(strip_tags($this->event_header));
-        $this->event_note = htmlspecialchars(strip_tags($this->event_note));
+        $this->date = htmlspecialchars(strip_tags($this->date));
+        $this->header = htmlspecialchars(strip_tags($this->header));
+        $this->note = htmlspecialchars(strip_tags($this->note));
         $this->owner = htmlspecialchars(strip_tags($this->owner));
 
-        $stmt->bindParam(':owner', $this->owner);
-        $stmt->bindParam(':date', $this->event_date);
-        $stmt->bindParam(':header', $this->event_header);
-        $stmt->bindParam(':note', $this->event_note);
+        $params = array($this->owner, $this->date, $this->header, $this->note);
+        $stmt = sqlsrv_query($this->conn, $query, $params); 
         
-        if($stmt->execute()){
+        if($stmt){
             return true;
         } 
         else{
@@ -58,21 +58,19 @@ class Item{
 
     public function update(){
         $query = 'UPDATE events
-        SET date = :date, header = :header, note = :note
-        WHERE id = :id';
+        SET date = ?, header = ?, note = ?
+        WHERE id = ?';
         $stmt = $this->conn->prepare($query);
 
-        $this->event_date = htmlspecialchars(strip_tags($this->event_date));
-        $this->event_header = htmlspecialchars(strip_tags($this->event_header));
-        $this->event_note = htmlspecialchars(strip_tags($this->event_note));
-        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->date = htmlspecialchars(strip_tags($this->date));
+        $this->header = htmlspecialchars(strip_tags($this->header));
+        $this->note = htmlspecialchars(strip_tags($this->note));
+        $this->owner = htmlspecialchars(strip_tags($this->owner));
 
-        $stmt ->bindParam(':id', $this->id);
-        $stmt->bindParam(':date', $this->event_date);
-        $stmt->bindParam(':header', $this->event_header);
-        $stmt->bindParam(':note', $this->event_note);
-        
-        if($stmt->execute()){
+        $params = array($this->owner, $this->date, $this->header, $this->note);
+        $stmt = sqlsrv_query($this->conn, $query, $params); 
+
+        if($stmt){
             return true;
         } 
         else{
@@ -83,12 +81,11 @@ class Item{
 
     public function delete(){
          $query = 'DELETE FROM events
-            WHERE id = :id';
-        $stmt = $this->conn->prepare($query);
-
-        $this->id = htmlspecialchars(strip_tags($this->id));
-
-        $stmt ->bindParam(':id', $this->id);
+            WHERE id = ?';
+            
+        $this->owner = htmlspecialchars(strip_tags($this->owner));
+        $params = array($this->owner);
+        $stmt = sqlsrv_query($this->conn, $query, $params); 
         
         if($stmt->execute()){
             return true;

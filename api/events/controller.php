@@ -28,9 +28,9 @@ class Controller{
             echo json_encode(["message" => "brak wlasciciela"]);
         }
 
-        $this->event->event_date = $data['date'];
-        $this->event->event_header = $data['header'];
-        $this->event->event_note = $data['note'];
+        $this->event->date = $data['date'];
+        $this->event->header = $data['header'];
+        $this->event->note = $data['note'];
         $this->event->owner = $data['owner'];
 
         if($this->event->create()){
@@ -52,9 +52,9 @@ class Controller{
         }
 
         $this->event->id = $data['id'];
-        $this->event->event_date = $data['date'];
-        $this->event->event_header = $data['header'];
-        $this->event->event_note = $data['note'];
+        $this->event->date = $data['date'];
+        $this->event->header = $data['header'];
+        $this->event->note = $data['note'];
 
         if($this->event->update()){
             echo json_encode(["message" => "update ok"]);
