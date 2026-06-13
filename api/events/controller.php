@@ -11,7 +11,7 @@ class Controller{
         $this->event->owner = $data;
         $return = $this->event->read($data);
         $result = [];
-        while($row = $return->fetch(PDO::FETCH_ASSOC)){
+        while($row = $return->sqlsrv_fetch($return)){
             array_push($result, $row);
         }
         echo json_encode($result);

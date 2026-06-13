@@ -18,8 +18,7 @@ class User{
             login as login,
             password as password
             FROM users';
-        $stmt = $this->conn->prepare($query); 
-        $stmt->execute();
+        $stmt = sqlsrv_query($this->conn, $query); 
         return $stmt;
     }
 
@@ -30,23 +29,23 @@ class User{
             login as login,
             password as password
             FROM users
-            WHERE login LIKE :login';
-        $stmt = $this->conn->prepare($query);
+            WHERE login LIKE ?';
         $this->login = htmlspecialchars(strip_tags($this->login));
-        $stmt-> bindParam(':login', $this->login);
-        $stmt -> execute();
+        $params = array($this->login);
+        $stmt = sqlsrv_query($this->conn, $query, $params); 
         return $stmt;
     }
 
 
     public function create() {
-        $query = 'INSERT INTO users (login, password) VALUES (:login, :password)';
-        $stmt = $this->conn->prepare($query);
+        $query = 'INSERT 
+        INTO users (login, password) 
+        VALUES (?, ?)';
         $this->login = htmlspecialchars(strip_tags($this->login));
         $this->password = htmlspecialchars(strip_tags($this->password));
-        $stmt->bindParam(':login', $this->login);
-        $stmt->bindParam(':password', hash('sha256', $this->password));
-        if($stmt->execute()){
+        $params = array($this->login, $this->password);
+        $stmt = sqlsrv_query($this->conn, $query, $params); 
+        if($stmt){
             return true;
         } 
         else{
@@ -57,20 +56,18 @@ class User{
     
     public function update(){
         $query = 'UPDATE users
-        SET login = :login, password = :password
-        WHERE id = :id';
+        SET login = ?, password = ?
+        WHERE id = ?';
         $stmt = $this->conn->prepare($query);
 
         $this->login = htmlspecialchars(strip_tags($this->login));
         $this->password = htmlspecialchars(strip_tags($this->password));
         $this->id = htmlspecialchars(strip_tags($this->id));
 
-        $pass = hash('sha256', $this->password);
-        $stmt ->bindParam(':id', $this->id);
-        $stmt->bindParam(':login', $this->login);
-        $stmt->bindParam(':password', $pass);
+        $params = array($this->login, $this->password, $this->id);
+        $stmt = sqlsrv_query($this->conn, $query, $params); 
         
-        if($stmt->execute()){
+        if($stmt){
             return true;
         } 
         else{
@@ -81,12 +78,13 @@ class User{
 
     public function delete(){
         $query = 'DELETE FROM users
-            WHERE id = :id';
-        $stmt = $this->conn->prepare($query);
+            WHERE id = ?';
+
         $this->id = htmlspecialchars(strip_tags($this->id));
-        $stmt ->bindParam(':id', $this->id);
+        $params = array($this->id);
+        $stmt = sqlsrv_query($this->conn, $query, $params); 
         
-        if($stmt->execute()){
+        if($stmt){
             return true;
         } 
         else{
