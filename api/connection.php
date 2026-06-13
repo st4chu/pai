@@ -2,9 +2,11 @@
 
 class DB{
     public $conn;
+    private $username;
+    private $password;
     public function __construct($l, $p){
-        public $username = $l;
-        public $password = $p;
+        $this->username = $l;
+        $this->password = $p;
     }
 
     public function getConn(){
