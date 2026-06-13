@@ -10,6 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
+$username = file_get_contents("../login.txt");
+$password = file_get_contents("../pass.txt");
 include_once '../connection.php';
 include_once 'item.php';
 include_once 'controller.php';

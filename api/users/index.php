@@ -10,11 +10,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
+$username = file_get_contents("../login.txt");
+$password = file_get_contents("../pass.txt");
 include_once '../connection.php';
 include_once 'user.php';
 include_once 'controller.php';
 
-$db = new DB();
+$db = new DB($username, $password);
 $conn = $db->getConn();
 $controller = new Controller($conn);
 
