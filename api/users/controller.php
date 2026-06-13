@@ -10,7 +10,7 @@ class Controller{
     public function read(){
         $return = $this->user->read();
         $result = [];
-        while($row = $return->fetch(PDO::FETCH_ASSOC)){
+        while($row = sqlsrv_fetch_array($return)){
             array_push($result, $row);
         }
         echo json_encode($result);
@@ -20,7 +20,7 @@ class Controller{
         $this->user->login = $data;
         $return = $this->user->readOne($data);
         $result = [];
-        while($row = $return->fetch(PDO::FETCH_ASSOC)){
+        while($row = sqlsrv_fetch_array($return)){
             array_push($result, $row);
         }
         echo json_encode($result);
