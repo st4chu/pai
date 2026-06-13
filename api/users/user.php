@@ -42,7 +42,7 @@ class User{
         INTO users (login, password) 
         VALUES (?, ?)';
         $this->login = htmlspecialchars(strip_tags($this->login));
-        $this->password = htmlspecialchars(strip_tags($this->password));\
+        $this->password = htmlspecialchars(strip_tags($this->password));
         $pass = hash('sha256', $this->password);
         $params = array($this->login, $pass);
         $stmt = sqlsrv_query($this->conn, $query, $params); 
