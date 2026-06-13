@@ -42,8 +42,9 @@ class User{
         INTO users (login, password) 
         VALUES (?, ?)';
         $this->login = htmlspecialchars(strip_tags($this->login));
-        $this->password = htmlspecialchars(strip_tags($this->password));
-        $params = array($this->login, $this->password);
+        $this->password = htmlspecialchars(strip_tags($this->password));\
+        $pass = hash('sha256', $this->password);
+        $params = array($this->login, $pass);
         $stmt = sqlsrv_query($this->conn, $query, $params); 
         if($stmt){
             return true;
@@ -64,7 +65,8 @@ class User{
         $this->password = htmlspecialchars(strip_tags($this->password));
         $this->id = htmlspecialchars(strip_tags($this->id));
 
-        $params = array($this->login, $this->password, $this->id);
+        $pass = hash('sha256', $this->password);
+        $params = array($this->login, $pass, $this->id);
         $stmt = sqlsrv_query($this->conn, $query, $params); 
         
         if($stmt){
@@ -93,6 +95,4 @@ class User{
         }
     }
 }
-
-
 ?>
