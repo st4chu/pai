@@ -1,9 +1,9 @@
 <?php
 
 class DB{
-    private $conn;
-    public function __construct(){
-        $this->conn = null;
+    public $conn;
+    function __construct(){
+    $this->conn = null;
        try{
             $login = file_get_contents('../keys/login.txt');
             $pass = file_get_contents('../keys/pass.txt')
@@ -13,7 +13,7 @@ class DB{
 			echo "connection error: " . $e->getMessage();
 		}
     }
-    public function getConn(){
+    function getConn(){
         return $this->conn;
     }
 }
