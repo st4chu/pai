@@ -16,7 +16,7 @@ include_once '../connection.php';
 include_once 'item.php';
 include_once 'controller.php';
 
-$db = new DB();
+$db = new DB($username, $password);
 $conn = $db->getConn();
 $controller = new Controller($conn);
 
