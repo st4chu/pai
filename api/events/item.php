@@ -57,7 +57,6 @@ class Item{
         $query = 'UPDATE events
         SET date = ?, header = ?, note = ?
         WHERE id = ?';
-        $stmt = $this->conn->prepare($query);
 
         $this->date = htmlspecialchars(strip_tags($this->date));
         $this->header = htmlspecialchars(strip_tags($this->header));
