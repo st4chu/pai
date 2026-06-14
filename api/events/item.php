@@ -62,9 +62,9 @@ class Item{
         $this->date = htmlspecialchars(strip_tags($this->date));
         $this->header = htmlspecialchars(strip_tags($this->header));
         $this->note = htmlspecialchars(strip_tags($this->note));
-        $this->owner = htmlspecialchars(strip_tags($this->owner));
+        $this->id = htmlspecialchars(strip_tags($this->id));
 
-        $params = array($this->owner, $this->date, $this->header, $this->note);
+        $params = array($this->date, $this->header, $this->note, $this->id);
         $stmt = sqlsrv_query($this->conn, $query, $params); 
 
         if($stmt){
@@ -80,8 +80,8 @@ class Item{
          $query = 'DELETE FROM events
             WHERE id = ?';
             
-        $this->owner = htmlspecialchars(strip_tags($this->owner));
-        $params = array($this->owner);
+        $this->owner = htmlspecialchars(strip_tags($this->id));
+        $params = array($this->id);
         $stmt = sqlsrv_query($this->conn, $query, $params); 
         
         if($stmt->execute()){

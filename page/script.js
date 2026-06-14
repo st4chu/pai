@@ -59,6 +59,7 @@ function displayAraray(array){
         let time_delta = (time - now)/(1000 * 60 * 60 * 24);
         element.days = Math.floor(time_delta);
         element.hours = Math.floor(24*(time_delta - element.days));
+        element[2].date = element[2].date.slice(0,16);
         // event minal
         if(time_delta < 0) element.class = "passed";
         // do 8 godzin
@@ -178,6 +179,7 @@ async function editEvent(id){
             date: String(date),
             note : document.getElementById("edit_note").value
         };
+        console.log("dane ok");
         const response = await fetch(API_EV, {
             method: 'PUT',
             headers: {
@@ -185,6 +187,7 @@ async function editEvent(id){
             },
             body: JSON.stringify(edited)
         });
+        console.log("request ok");
 
         const result = await response.json();
         if(result.message){
