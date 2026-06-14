@@ -77,19 +77,19 @@ function displayAraray(array){
     }
     else{
         display.innerHTML = array.map(array => 
-            console.log(array[0], array[1], array[2], array[3], array[4]);
-            `<div id="${array.id}">
+            `<div id="${array[0]}">
                 <div class="${array.class}">
-                    <p class="event_header">${array.event_header}</p>
-                    <p class="event_date">${array.event_date} Za ${array.days} dni i ${array.hours} godzin</p>
-                    <p class="event_note">${array.event_note}</p>
+                    <p class="event_header">${array[3]}</p>
+                    <p class="event_date">${array[2]} Za ${array.days} dni i ${array.hours} godzin</p>
+                    <p class="event_note">${array[4]}</p>
                 </div>
                 <div class="actions">
-                    <button class="edit primary" onClick="editItem(${array.id})">Edytuj</button>
-                    <button class="delete" onClick="deleteItem(${array.id})">Usuń</button>
+                    <button class="edit primary" onClick="editItem(${array[0]})">Edytuj</button>
+                    <button class="delete" onClick="deleteItem(${array[0]})">Usuń</button>
                 </div>
             </div>`).join(`<hr>`);
     }
+
 }
 
 // dodawanie do tabeli
