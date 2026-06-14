@@ -27,7 +27,7 @@
             <h2>Zaloguj się</h2>
             <form id="form" action="login.php" method="post">
                 <div class="row">
-                    <input type="text" id="login" name="login" placeholder="Nazwa Użytkownika" class="col-6">
+                    <input type="text" id="login" name="login" placeholder="Nazwa użytkownika" class="col-6">
                     <div class="col-6"></div>
                     <input type="password" id="password" name="password" placeholder="Hasło" class="col-6">
                     <div class="col-12"></div>    
