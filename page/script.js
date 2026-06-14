@@ -77,6 +77,7 @@ function displayAraray(array){
     }
     else{
         display.innerHTML = array.map(array => 
+            console.log(array[0], array[1], array[2], array[3], array[4]);
             `<div id="${array.id}">
                 <div class="${array.class}">
                     <p class="event_header">${array.event_header}</p>
