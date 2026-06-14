@@ -54,10 +54,9 @@ function displayAraray(array){
 
     let now = new Date();
     array.forEach((element) => {
-        let time = new Date(element.event_date);
+        let time = new Date(element[2].date);
         //roznica w godzinach
         let time_delta = (time - now)/(1000 * 60 * 60 * 24);
-        console.log(element.id,":  ",time_delta);
         element.days = Math.floor(time_delta);
         element.hours = Math.floor(24*(time_delta - element.days));
         // event minal
@@ -69,6 +68,7 @@ function displayAraray(array){
         // do tygodnia
         else if(time_delta <= 7) element.class = "nextweek";
         // reszta
+        console.log(element);
         });
 
 
@@ -80,7 +80,7 @@ function displayAraray(array){
             `<div id="${array[0]}">
                 <div class="${array.class}">
                     <p class="event_header">${array[3]}</p>
-                    <p class="event_date">${array[2]} Za ${array.days} dni i ${array.hours} godzin</p>
+                    <p class="event_date">${array[2].date} Za ${array.days} dni i ${array.hours} godzin</p>
                     <p class="event_note">${array[4]}</p>
                 </div>
                 <div class="actions">
